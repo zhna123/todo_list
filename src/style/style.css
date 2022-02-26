@@ -1,0 +1,178 @@
+html, body {
+    width: 100%;
+    font-family: 'Kohinoor Telugu', sans-serif;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.header {
+    background-color: #2B4F61;
+    height: 120px;
+    color: white;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.date {
+    width: calc(100%/3);
+    text-align: left;
+    margin-left: 20px;
+    font-size: 30px;
+}
+
+.title {
+    width: calc(100%/3);
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.content_body {
+    display: flex;
+    min-height: 100vh;
+}
+
+.menu {
+    width: 25%;
+    background-color: #71989B;
+}
+
+.menu_content {
+    width: 75%;
+    background-color: #70707017;
+}
+
+.project {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 30px;
+    font-weight: 450;
+    color: white;
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+
+.proj_btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    color: white;
+    font-size: 20px;
+    text-align: left;
+    padding-left: 20px;
+    background-color: #2B4F6164;
+
+    border: .5px solid #2B4F61;
+}
+
+.proj_btn:hover {
+    background-color: rgba(43, 79, 97, 0.644);
+}
+
+button.default {
+    background-color: #2B4F61;
+}
+
+.overlay {
+    display: none;
+    opacity: 0;
+    background: rgba(0, 0, 0, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    cursor: pointer;
+    transition: opacity .3s;
+}
+
+.popup {
+    display: none;
+    opacity: 0;
+    width: 50vw;
+    height: 50vh;
+    position: fixed;
+    left: 25vw;
+    top: 25vh;
+    z-index: 101;
+
+    background-color: white;
+}
+
+.open {
+    display: block;
+    opacity: 1;
+}
+
+/* .add_project {
+    display: none;
+} */
+
+.popup img {
+    width: 40px;
+    position: absolute;
+    right: 0;
+    margin-top: 5px;
+    margin-right: 5px;   
+}
+
+.form_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+.add_project_form {
+    width: 100%;
+}
+
+.btn_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.btn_div button {
+    font: inherit;
+    font-size: 25px;
+    color: white;
+    width: 40%;
+    height: 40px;
+    background-color: #2B4F61;
+    border: none;
+    border-radius: 10px;
+}
+
+.input_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.input_div input {
+    width: 60%;
+    height: 40px;
+}
+
+input[type=text] {
+    font: inherit;
+    border: .9px solid #707070;
+    border-radius: 4px;
+    padding: 5px;
+}
