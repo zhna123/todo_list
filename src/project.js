@@ -1,6 +1,6 @@
 import Storage from './storage.js';
 
-class Project {
+export class Project {
     constructor(name, todoItems) {
         this.name = name;
         this.todoItems = todoItems;
@@ -14,9 +14,9 @@ class Project {
 const storage = new Storage();
 
 export function createNewProject(name) {
-    const project = new Project(name);
+    const project = new Project(name, []);
     console.log(project);
-    storage.saveProjectByName(project);
+    storage.saveProject(project);
 }
 
 export function getAllProjects() {

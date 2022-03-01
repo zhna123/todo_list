@@ -49,6 +49,99 @@ html, body {
     background-color: #70707017;
 }
 
+.menu_content > .content {
+    display: block;
+    text-align: center;
+}
+
+.menu_content .content img {
+    width: 90px;
+    cursor: pointer;
+}
+
+.menu_content .content .text {
+    color: #707070;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+.menu_content .content .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu_content .content .heading img {
+    width: 60px;
+    cursor: pointer;
+    padding-left: 35px;
+}
+
+.menu_content .content .heading .text {
+    font-size: 25px;
+    padding-right: 35px;
+    margin-top: 20px;
+}
+
+.menu_content .content .todos {
+    display: block;
+    
+}
+
+.menu_content .content .todos .todo {
+    display: flex;
+    justify-content: space-between;
+
+    background-color: white;
+    margin: 10px 20px;
+    border-radius: 5px;
+    height: 50px;
+
+    /* color: #707070; */
+}
+
+.menu_content .content .todos .todo .left,
+.menu_content .content .todos .todo .right {
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 40%;
+
+    color: #707070;
+}
+
+.menu_content .button {
+   border: none; 
+   height: 25px;
+   border-radius: 5px;
+   font: inherit;
+   font-size: 13px;
+   color: white;
+}
+
+button.complete {
+    background-color: #0AA027;
+    width: 100px;
+}
+
+button.edit {
+    background-color: #E4960E;
+    width: 80px;
+}
+
+button.delete {
+    background-color: #E30000;
+    width: 80px;
+}
+
+.menu_content .divider {
+    margin-top: 50px;
+}
+
+
 .project {
     display: flex;
     justify-content: center;
@@ -59,6 +152,10 @@ html, body {
     color: white;
     padding-top: 30px;
     padding-bottom: 10px;
+}
+
+.project img {
+    cursor: pointer;
 }
 
 .proj_btn {
@@ -92,7 +189,6 @@ button.default {
     width: 100vw;
     height: 100vh;
     z-index: 100;
-    cursor: pointer;
     transition: opacity .3s;
 }
 
@@ -114,16 +210,13 @@ button.default {
     opacity: 1;
 }
 
-/* .add_project {
-    display: none;
-} */
-
 .popup img {
     width: 40px;
     position: absolute;
     right: 0;
     margin-top: 5px;
     margin-right: 5px;   
+    cursor: pointer;
 }
 
 .form_content {
@@ -156,6 +249,7 @@ button.default {
     background-color: #2B4F61;
     border: none;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .input_div {

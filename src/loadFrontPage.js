@@ -1,7 +1,8 @@
 import './style/style.css';
 import Add_Icon from './images/project_add.svg';
-import Close_Icon from './images/close_form.svg';
-import {createNewProject, getAllProjects} from './project.js';
+import {getAllProjects} from './project.js';
+import {loadProjectContent} from './menuContent.js';
+import {openProjectForm} from './form.js';
 
 export function loadHeader() {
 
@@ -23,6 +24,7 @@ export function loadHeader() {
 
 }
 
+// body has menu and menu content
 export function loadBody() {
 
     const bodyDiv = document.createElement("div");
@@ -65,17 +67,18 @@ function loadMenu() {
 
     //load all project from localStorage
     const projects = getAllProjects();
-    if (projects.length === 0) {
-        console.log("empty projects")
-    } else {
-        console.log(projects)
-    }
-
     projects.forEach(p => {
         const projectBtn = document.createElement("button");
         projectBtn.classList.add("proj_btn");
         projectBtn.textContent = p.val.name;
         projectListDiv.appendChild(projectBtn);
+
+        projectBtn.addEventListener("click", function(e) {
+            clearMenuContent();
+            const projectContent = loadProjectContent(p.val);
+            const menuContent = getMenuContent();
+            menuContent.appendChild(projectContent);
+        })
     })   
 
     menuDiv.appendChild(titleDiv);
@@ -85,96 +88,26 @@ function loadMenu() {
 
 }
 
+function clearMenuContent() {
+    const menuContent = document.querySelector(".menu_content .content");
+    if (menuContent !== null) {
+        menuContent.remove();
+    }
+}
+
+function getMenuContent() {
+    return document.querySelector(".menu_content");
+}
+
 function loadMenuContent() {
 
     const menuContent = document.createElement("div");
     menuContent.classList.add("menu_content");
 
+    const content = loadProjectContent({name: "default", todoItems: []});
+    
+    menuContent.appendChild(content);
+
     return menuContent;
 
-}
-
-function openProjectForm() {
-    const popup = createPopupStructure();
-    const formContent = popup.querySelector(".form_content");
-    formContent.appendChild(projectForm());
-
-    const mainContent = document.querySelector("#content");
-    mainContent.appendChild(popup);
-    popup.classList.add("open");
-    // add overlay
-    mainContent.appendChild(openOverlay());
-}
-
-function createPopupStructure() {
-    const popupContainer = document.createElement("div");
-    popupContainer.classList.add("popup");
-
-    const formCloseIcon = new Image();
-    formCloseIcon.src = Close_Icon;
-
-    const content = document.createElement("div");
-    content.classList.add("form_content");
-
-    popupContainer.appendChild(formCloseIcon);
-    popupContainer.appendChild(content);
-
-    return popupContainer;
-}
-
-function projectForm() {
-
-    const addProject = document.createElement("div");
-    addProject.classList.add("add_project");
-    const form = document.createElement("form");
-    form.classList.add("add_project_form");
-    addProject.appendChild(form);
-
-    const inputDiv = document.createElement("div");
-    inputDiv.classList.add("input_div");
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = "Project name…"
-    input.name = "projectName";
-    input.required = true;
-    inputDiv.appendChild(input)
-
-    const btnDiv = document.createElement("div")
-    btnDiv.classList.add("btn_div");
-    const btn = document.createElement("button");
-    btn.textContent = "ADD";
-    btnDiv.appendChild(btn);
-
-    btn.addEventListener("click", function(e) {
-        e.preventDefault();
-        const projectName = form.elements['projectName'].value;
-        createNewProject(projectName);
-        closeForm();
-        location.reload();
-    })
-
-    form.appendChild(inputDiv);
-    form.appendChild(btnDiv);
-
-    return form;
-}
-
-// to darken content
-function createOverlay() {
-    const overlay = document.createElement("div");
-    overlay.classList.add("overlay");
-    return overlay;
-}
-
-function openOverlay() {
-    const overlay = createOverlay();
-    overlay.classList.add("open");
-    return overlay;
-}
-
-function closeForm() {
-    const popup = document.querySelector(".popup");
-    popup.remove();
-    const overlay = document.querySelector(".overlay");
-    overlay.remove();
 }
