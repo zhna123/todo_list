@@ -10,3 +10,6 @@ const bodyDiv = loadBody();
 content.appendChild(headerDiv);
 content.appendChild(bodyDiv);
 
+const defaultBtn = document.querySelector("button.default");
+defaultBtn.click();
+

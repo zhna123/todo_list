@@ -5,10 +5,6 @@ export class Project {
         this.name = name;
         this.todoItems = todoItems;
     } 
-
-    addToTodoItemToProject(todoItem) {
-        // const project = 
-    }
 }
 
 const storage = new Storage();
@@ -21,4 +17,24 @@ export function createNewProject(name) {
 
 export function getAllProjects() {
     return storage.getAllProjects();
+}
+
+export function getOrCreateProject(name) {
+    return storage.getOrCreateProject(name);
+}
+
+export function getProject(name) {
+    return storage.getProjectByName(name);
+}
+
+export function saveTodoItemInProject(projectName, todoItem) {
+    storage.saveTodoItemInProject(projectName, todoItem);
+}
+
+export function updateTodoItem(projectName, todoItem, index) {
+    storage.updateTodoItem(projectName, todoItem, index);
+}
+
+export function deleteTodoItem(projectName, index) {
+    storage.deleteTodoItem(projectName, index);
 }

@@ -1,11 +1,26 @@
 import Close_Icon from './images/close_form.svg';
-import {createNewProject} from './project.js';
+import ExpandMore_Icon from './images/expand_more.svg';
+import ExpandLess_Icon from './images/expand_less.svg';
+import {createNewProject, saveTodoItemInProject} from './project.js';
+import {TodoItem} from './todoItem.js';
 
 export function openProjectForm() {
     const popup = createPopupStructure();
     const formContent = popup.querySelector(".form_content");
     formContent.appendChild(projectForm());
 
+    appendPopup(popup);
+}
+
+export function openAddTodoForm(project, projectBtn) {
+    const popup = createPopupStructure();
+    const formContent = popup.querySelector(".form_content");
+    formContent.appendChild(todoForm(project, projectBtn));
+
+    appendPopup(popup);
+}
+
+function appendPopup(popup) {
     const mainContent = document.querySelector("#content");
     mainContent.appendChild(popup);
     popup.classList.add("open");
@@ -67,6 +82,57 @@ function projectForm() {
     form.appendChild(btnDiv);
 
     return form;
+}
+
+function todoForm(project, projectBtn) {
+    const addTodo = document.createElement("div");
+    addTodo.classList.add("add_todo");
+    const form = document.createElement("form");
+    form.classList.add("add_todo_form");
+    addTodo.appendChild(form);
+
+    const inputDiv = document.createElement("div");
+    inputDiv.classList.add("input_div");
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "New task ..."
+    input.name = "title";
+    input.required = true;
+    inputDiv.appendChild(input)
+    form.appendChild(inputDiv);
+
+    const moreOptionDiv = document.createElement("div");
+    moreOptionDiv.classList.add("more_option");
+    moreOptionDiv.textContent = "SHOW MORE OPTIONS";
+    const expandMoreIcon = new Image();
+    expandMoreIcon.src = ExpandMore_Icon;
+    moreOptionDiv.appendChild(expandMoreIcon);
+
+    form.appendChild(moreOptionDiv);
+
+    // more fields - hidden by default
+
+    const btnDiv = document.createElement("div")
+    btnDiv.classList.add("btn_div");
+    const btn = document.createElement("button");
+    btn.textContent = "SAVE";
+    btnDiv.appendChild(btn);
+
+    btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        const title = form.elements['title'].value;
+        // title, dueDate, priority, description, project, complete
+        const todo = new TodoItem(title, "", "", "", project.name, false); 
+        saveTodoItemInProject(project.name, todo)
+        
+        closeForm();
+        projectBtn.click();
+    })
+
+    form.appendChild(btnDiv);
+
+    return form;
+
 }
 
 // to darken content

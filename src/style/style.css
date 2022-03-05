@@ -55,7 +55,7 @@ html, body {
 }
 
 .menu_content .content img {
-    width: 90px;
+    width: 80px;
     cursor: pointer;
 }
 
@@ -63,7 +63,7 @@ html, body {
     color: #707070;
     margin-top: 50px;
     margin-bottom: 30px;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .menu_content .content .heading {
@@ -89,28 +89,39 @@ html, body {
     
 }
 
-.menu_content .content .todos .todo {
+.menu_content .content .todos .todo,
+.menu_content .content .todos .completed .completed_todo {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     background-color: white;
     margin: 10px 20px;
     border-radius: 5px;
     height: 50px;
+}
 
-    /* color: #707070; */
+.menu_content .content .todos .completed .completed_todo {
+    background-color: #70707040;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.completed_todo span {
+    text-decoration: line-through;
+    color: #707070CC;
 }
 
 .menu_content .content .todos .todo .left,
 .menu_content .content .todos .todo .right {
 
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    width: 40%;
-
+    justify-content: space-between;
+    width: 30%;
     color: #707070;
+
+    padding-left: 32px;
+    padding-right: 32px;
 }
 
 .menu_content .button {
@@ -141,6 +152,12 @@ button.delete {
     margin-top: 50px;
 }
 
+.menu_content .content .todos .completed .completed_heading {
+    text-align: left;
+    margin: 10px 50px;
+    font-size: 20px;
+    color: #707070;
+}
 
 .project {
     display: flex;
@@ -172,11 +189,11 @@ button.delete {
 }
 
 .proj_btn:hover {
-    background-color: rgba(43, 79, 97, 0.644);
+    background-color: rgba(43, 79, 97, 0.267);
 }
 
-button.default {
-    background-color: #2B4F61;
+.proj_btn.active {
+    background-color: rgba(43, 79, 97, 0.644);
 }
 
 .overlay {
@@ -210,7 +227,7 @@ button.default {
     opacity: 1;
 }
 
-.popup img {
+.popup > img {
     width: 40px;
     position: absolute;
     right: 0;
@@ -229,7 +246,8 @@ button.default {
     height: 100%;
 }
 
-.add_project_form {
+.add_project_form,
+.add_todo_form {
     width: 100%;
 }
 
@@ -269,4 +287,17 @@ input[type=text] {
     border: .9px solid #707070;
     border-radius: 4px;
     padding: 5px;
+}
+
+.more_option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+    margin-top: 20px;
+    color: #707070;
+}
+
+.more_option img {
+    width: 40px;
 }

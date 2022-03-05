@@ -1,6 +1,6 @@
 import './style/style.css';
 import Add_Icon from './images/project_add.svg';
-import {getAllProjects} from './project.js';
+import {getAllProjects, getOrCreateProject, getProject} from './project.js';
 import {loadProjectContent} from './menuContent.js';
 import {openProjectForm} from './form.js';
 
@@ -34,8 +34,7 @@ export function loadBody() {
     bodyDiv.appendChild(menuDiv);
     bodyDiv.appendChild(menuContentDiv);
 
-    return bodyDiv;
-    
+    return bodyDiv;  
 }
 
 function loadMenu() {
@@ -58,26 +57,34 @@ function loadMenu() {
 
     const projectListDiv = document.createElement("div");
     projectListDiv.classList.add("project_list");
-
+    // default project always shows up
     const defaultProjBtn = document.createElement("button");
     defaultProjBtn.classList.add("proj_btn");
     defaultProjBtn.classList.add("default");
     defaultProjBtn.textContent = "Default Project";
     projectListDiv.appendChild(defaultProjBtn);
 
+    defaultProjBtn.addEventListener("click", function(e) {
+        const defaultProj = getOrCreateProject("default");
+        resetMenuState();
+        defaultProjBtn.classList.add("active");
+        loadContent(defaultProj, defaultProjBtn);
+    })
+
     //load all project from localStorage
     const projects = getAllProjects();
-    projects.forEach(p => {
+    projects.filter(p => p.val.name !== "default").forEach(p => {
         const projectBtn = document.createElement("button");
         projectBtn.classList.add("proj_btn");
         projectBtn.textContent = p.val.name;
         projectListDiv.appendChild(projectBtn);
 
         projectBtn.addEventListener("click", function(e) {
-            clearMenuContent();
-            const projectContent = loadProjectContent(p.val);
-            const menuContent = getMenuContent();
-            menuContent.appendChild(projectContent);
+            // ensure to get new content from project
+            const proj = getProject(p.val.name);
+            resetMenuState();
+            projectBtn.classList.add("active");
+            loadContent(proj, projectBtn);
         })
     })   
 
@@ -88,6 +95,13 @@ function loadMenu() {
 
 }
 
+function loadContent(project, projectBtn) {
+    clearMenuContent();
+    const projectContent = loadProjectContent(project, projectBtn);
+    const menuContent = document.querySelector(".menu_content");
+    menuContent.appendChild(projectContent);
+}
+
 function clearMenuContent() {
     const menuContent = document.querySelector(".menu_content .content");
     if (menuContent !== null) {
@@ -95,19 +109,15 @@ function clearMenuContent() {
     }
 }
 
-function getMenuContent() {
-    return document.querySelector(".menu_content");
+function resetMenuState() {
+    const activeMenu = document.querySelector(".proj_btn.active");
+    if (activeMenu !== null) {
+        activeMenu.classList.remove("active");
+    }
 }
 
 function loadMenuContent() {
-
     const menuContent = document.createElement("div");
     menuContent.classList.add("menu_content");
-
-    const content = loadProjectContent({name: "default", todoItems: []});
-    
-    menuContent.appendChild(content);
-
     return menuContent;
-
 }

@@ -1,10 +1,4 @@
-// need to delete after testing
-import {Project} from './project.js';
-import {TodoItem} from './todoItem.js';
-
-
 const PROJECT_PREFIX = "project_";
-const TODO_PREFIX = "todo_";
 
 export default class Storage {
     saveProject(project) {
@@ -13,28 +7,31 @@ export default class Storage {
 
     getProjectByName(name) {
         const project = localStorage.getItem(PROJECT_PREFIX + name);
+        console.log(JSON.parse(project))
         return project === null ? {} : JSON.parse(project);
     }
 
+    getOrCreateProject(projName) {
+        const project = localStorage.getItem(PROJECT_PREFIX + projName);
+        if (project === null) {
+            this.saveProject({name: projName, todoItems: []});
+        }
+        return JSON.parse(localStorage.getItem(PROJECT_PREFIX + projName));
+    }
+
     getAllProjects() {
-        // let item, results = [];
-        // for (item in localStorage) {
-        //     if (localStorage.hasOwnProperty(item)) {
-        //         const regex = /project_.+/i;
-        //         if(item.match(regex)) {
-        //             const value = JSON.parse(localStorage.getItem(item));
-        //             results.push({key: item, val: value});
-        //         }
-        //     }
-        // }
-        // title, dueDate, priority, description, project
-        const todo = new TodoItem("todo 1", "na", "low", "na", "abc");
-        const todo2 = new TodoItem("todo 2", "na", "low", "na", "abc");
-
-        const proj = new Project("abc", [todo, todo2]);
-
+        // let itemKey;
+        // array of objects - {key: projectName String, val: Project Object}
         const results = [];
-        results.push({key: "abc", val: proj});
+        for (let itemKey in localStorage) {
+            if (localStorage.hasOwnProperty(itemKey)) {
+                const regex = /project_.+/i;
+                if(itemKey.match(regex)) {
+                    const value = JSON.parse(localStorage.getItem(itemKey));
+                    results.push({key: itemKey, val: value});
+                }
+            }
+        }
         return results;
     }
 
@@ -44,7 +41,15 @@ export default class Storage {
         this.saveProject(project)
     }
 
-    // getTodosFromProject(project) {
-    //     const todos = localStorage.getI
-    // }
+    updateTodoItem(projectName, todoItem, index) {
+        const project = this.getProjectByName(projectName);
+        project.todoItems[index] = todoItem;
+        this.saveProject(project)
+    }
+
+    deleteTodoItem(projectName, index) {
+        const project = this.getProjectByName(projectName);
+        project.todoItems.splice(index, 1);
+        this.saveProject(project)
+    }
 }
