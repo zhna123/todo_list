@@ -213,7 +213,7 @@ button.delete {
     display: none;
     opacity: 0;
     width: 50vw;
-    height: 50vh;
+    height: auto;
     position: fixed;
     left: 25vw;
     top: 25vh;
@@ -241,6 +241,9 @@ button.delete {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    margin-top: 50px;
+    margin-bottom: 40px;
 
     width: 100%;
     height: 100%;
@@ -270,34 +273,58 @@ button.delete {
     cursor: pointer;
 }
 
-.input_div {
+.input_div,
+.select_div,
+.textarea_div {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
 }
 
-.input_div input {
+.input_div input,
+.select_div select,
+.textarea_div textarea {
     width: 60%;
-    height: 40px;
-}
-
-input[type=text] {
+    /* height: 40px; */
     font: inherit;
+    color: #707070;
     border: .9px solid #707070;
     border-radius: 4px;
     padding: 5px;
+
+    box-sizing: border-box;
 }
 
 .more_option {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 70px;
+    /* gap: 50px; */
     margin-top: 20px;
     color: #707070;
+
+    margin-bottom: 20px;
 }
 
 .more_option img {
     width: 40px;
+}
+
+.select_div {
+    margin-top: 20px;
+}
+
+.select_div select {
+    appearance: none;
+    /* padding-right: 15px; */
+    background-image: url('../images/expand_more.svg');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 3px) center;
+    background-size: 35px;
+}
+
+.textarea_div textarea {
+    height: 100px;
+    margin-top: 20px;
 }
