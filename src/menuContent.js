@@ -1,5 +1,5 @@
 import ADD_TODO_ICON from './images/add_todo.svg';
-import {openAddTodoForm} from './form.js';
+import {openAddTodoForm, openEditForm} from './form.js';
 import {markComplete} from './todoItem.js'
 import {updateTodoItem, deleteTodoItem} from './project.js';
 
@@ -96,6 +96,11 @@ function loadTodosDiv(project, projectBtn) {
         editBtn.classList.add("button");
         editBtn.classList.add("edit");
         editBtn.textContent = "EDIT";
+
+        editBtn.addEventListener("click", function(e) {
+            openEditForm(project, todo, index, projectBtn);
+        });
+
         right.appendChild(editBtn);
 
         const delBtn = document.createElement("button");

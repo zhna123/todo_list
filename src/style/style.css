@@ -212,11 +212,12 @@ button.delete {
 .popup {
     display: none;
     opacity: 0;
-    width: 50vw;
-    height: auto;
-    position: fixed;
-    left: 25vw;
-    top: 25vh;
+    width: 50%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 101;
 
     background-color: white;
@@ -275,16 +276,19 @@ button.delete {
 
 .input_div,
 .select_div,
-.textarea_div {
+.textarea_div,
+.dueDate_div {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: 20px;
 }
 
 .input_div input,
 .select_div select,
-.textarea_div textarea {
+.textarea_div textarea,
+.dueDate_div input {
     width: 60%;
     /* height: 40px; */
     font: inherit;
@@ -296,7 +300,8 @@ button.delete {
     box-sizing: border-box;
 }
 
-.more_option {
+.more_option,
+.less_option {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -307,13 +312,18 @@ button.delete {
     margin-bottom: 20px;
 }
 
-.more_option img {
+.less_option {
+    display: none;
+}
+
+.more_option img,
+.less_option img {
     width: 40px;
 }
 
-.select_div {
+/* .select_div {
     margin-top: 20px;
-}
+} */
 
 .select_div select {
     appearance: none;
@@ -326,5 +336,31 @@ button.delete {
 
 .textarea_div textarea {
     height: 100px;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+}
+
+input[type="date"]:before {
+    content: attr(placeholder) !important;
+    /* color: #aaa; */
+    margin-right: 0.5em;
+    /* width: 100%; */
+  }
+
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+    content: "";
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-image: url('../images/date.svg');
+}
+
+.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.hidden.open {
+    display: block;
+    opacity: 1;
 }
