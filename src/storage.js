@@ -20,7 +20,6 @@ export default class Storage {
     }
 
     getAllProjects() {
-        // let itemKey;
         // array of objects - {key: projectName String, val: Project Object}
         const results = [];
         for (let itemKey in localStorage) {

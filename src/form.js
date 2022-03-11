@@ -92,23 +92,29 @@ function projectForm() {
     return form;
 }
 
-function todoForm(project, projectBtn) {
+function createForm() {
     const addTodo = document.createElement("div");
     addTodo.classList.add("add_todo");
     const form = document.createElement("form");
     form.classList.add("add_todo_form");
     addTodo.appendChild(form);
+    return form;
+}
 
+function createTaskInput(value) {
     const inputDiv = document.createElement("div");
     inputDiv.classList.add("input_div");
     const input = document.createElement("input");
     input.type = "text";
     input.placeholder = "New task ..."
     input.name = "title";
+    input.value = value;
     input.required = true;
     inputDiv.appendChild(input)
-    form.appendChild(inputDiv);
+    return inputDiv;
+}
 
+function createOptionalDiv() {
     const optionalDiv = document.createElement("div");
     // more options
     const moreOptionDiv = document.createElement("div");
@@ -127,8 +133,6 @@ function todoForm(project, projectBtn) {
     lessOptionDiv.appendChild(expandLessIcon);
     optionalDiv.appendChild(lessOptionDiv);
 
-    form.appendChild(optionalDiv);
-
     expandMoreIcon.addEventListener("click", function(e) {
         document.querySelector(".more_option").style.display = 'none';
         document.querySelector(".less_option").style.display = 'flex';
@@ -141,9 +145,15 @@ function todoForm(project, projectBtn) {
         hideFields();
     })
 
-    // more fields - hidden by default
+    return optionalDiv;
+
+}
+
+function createHiddenForm(projectName, priority, description, hiddenByDefault) {
     const hiddenForm = document.createElement("div");
-    hiddenForm.classList.add("hidden");
+    if (hiddenByDefault) {
+        hiddenForm.classList.add("hidden");
+    }
     // project drop down
     const selectProjDiv = document.createElement("div");
     selectProjDiv.classList.add("select_div");
@@ -162,6 +172,11 @@ function todoForm(project, projectBtn) {
         const option = document.createElement("option");
         option.value = p.val.name;
         option.textContent = p.val.name;
+
+        if (p.val.name === projectName) {
+            option.selected = "true";
+        }
+
         selectProject.appendChild(option);
     })
 
@@ -186,6 +201,11 @@ function todoForm(project, projectBtn) {
         const option = document.createElement("option");
         option.value = p;
         option.textContent = p;
+
+        if (p === priority) {
+            option.selected = "true";
+        }
+
         selectPriority.appendChild(option);
     })
 
@@ -208,9 +228,24 @@ function todoForm(project, projectBtn) {
     const textarea = document.createElement("textarea");
     textarea.name = "description";
     textarea.placeholder = "Add description …";
+    textarea.value = description;
     textareaDiv.appendChild(textarea);
     hiddenForm.appendChild(textareaDiv);
 
+    return hiddenForm;
+}
+ 
+function todoForm(project, projectBtn) {
+    const form = createForm();
+
+    const inputDiv = createTaskInput("");
+    form.appendChild(inputDiv);
+
+    const optionalDiv = createOptionalDiv();
+    form.appendChild(optionalDiv);
+
+    // more fields - hidden by default
+    const hiddenForm = createHiddenForm("", "", "", true);
     form.appendChild(hiddenForm);
 
     const btnDiv = document.createElement("div")
@@ -234,9 +269,7 @@ function todoForm(project, projectBtn) {
     })
 
     form.appendChild(btnDiv);
-
     return form;
-
 }
 
 function editForm(project, todo, index, projectBtn) {
@@ -249,98 +282,12 @@ function editForm(project, todo, index, projectBtn) {
     const projectName = todo.project;
     const complete = false;
 
-    const addTodo = document.createElement("div");
-    addTodo.classList.add("add_todo");
-    const form = document.createElement("form");
-    form.classList.add("add_todo_form");
-    addTodo.appendChild(form);
+    const form = createForm();
 
-    const inputDiv = document.createElement("div");
-    inputDiv.classList.add("input_div");
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = "New task ...";
-    input.name = "title";
-    input.value = title;
-    input.required = true;
-    inputDiv.appendChild(input)
+    const inputDiv = createTaskInput(title);
     form.appendChild(inputDiv);
 
-    const hiddenForm = document.createElement("div");
-    // project drop down
-    const selectProjDiv = document.createElement("div");
-    selectProjDiv.classList.add("select_div");
-    const selectProject = document.createElement("select");
-    selectProject.name = "project";
-
-    const option = document.createElement("option");
-    option.value = "";
-    option.disabled = true;
-    option.selected = true;
-    option.textContent = "Select project";
-    selectProject.appendChild(option);
-
-    const projects = getAllProjects();
-    projects.forEach(p => {
-        const option = document.createElement("option");
-        option.value = p.val.name;
-        option.textContent = p.val.name;
-        if (p.val.name === projectName) {
-            option.selected = "true";
-        }
-        selectProject.appendChild(option);
-    })
-
-    selectProjDiv.appendChild(selectProject);
-    hiddenForm.appendChild(selectProjDiv);
-
-    // priority drop down
-    const selectPriorityDiv = document.createElement("div");
-    selectPriorityDiv.classList.add("select_div");
-    const selectPriority = document.createElement("select");
-    selectPriority.name = "priority";
-
-    const priorityOption = document.createElement("option");
-    priorityOption.value = "";
-    priorityOption.disabled = true;
-    priorityOption.selected = true;
-    priorityOption.textContent = "Select priority";
-    selectPriority.appendChild(priorityOption);
-
-    const allPriorities = ["Low", "Medium", "High"]
-    allPriorities.forEach((p, index) => {
-        const option = document.createElement("option");
-        option.value = p;
-        option.textContent = p;
-        if (p === priority) {
-            option.selected = "true";
-        }
-        selectPriority.appendChild(option);
-    })
-
-    selectPriorityDiv.appendChild(selectPriority);
-    hiddenForm.appendChild(selectPriorityDiv);
-
-    // due date - TODO
-    const dueDateDiv = document.createElement("div");
-    dueDateDiv.classList.add("dueDate_div");
-    const dateInput = document.createElement("input");
-    dateInput.type = "date";
-    dateInput.name = "dueDate";
-    dateInput.placeholder = "Due date"
-    dueDateDiv.appendChild(dateInput);
-    hiddenForm.appendChild(dueDateDiv);
-
-    // textarea
-    const textareaDiv = document.createElement("div");
-    textareaDiv.classList.add("textarea_div");
-    const textarea = document.createElement("textarea");
-    textarea.name = "description";
-    textarea.placeholder = "Add description …";
-    textarea.value = description;
-    textareaDiv.appendChild(textarea);
-    hiddenForm.appendChild(textareaDiv);
-
+    const hiddenForm = createHiddenForm(projectName, priority, description, false);
     form.appendChild(hiddenForm);
 
     const btnDiv = document.createElement("div")
@@ -369,7 +316,6 @@ function editForm(project, todo, index, projectBtn) {
     })
 
     form.appendChild(btnDiv);
-
     return form;
 }
 
