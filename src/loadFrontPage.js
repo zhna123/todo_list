@@ -3,6 +3,7 @@ import Add_Icon from './images/project_add.svg';
 import {getAllProjects, getOrCreateProject, getProject} from './project.js';
 import {loadProjectContent} from './menuContent.js';
 import {openProjectForm} from './form.js';
+import {format} from 'date-fns';
 
 export function loadHeader() {
 
@@ -11,7 +12,8 @@ export function loadHeader() {
 
     const dateDiv = document.createElement("div");
     dateDiv.classList.add("date");
-    dateDiv.textContent = "Tue Feb 22 2022"; // TODO - change to use today's date
+    const today = format(new Date(), "EEE MMM dd yyyy");
+    dateDiv.textContent = today; 
 
     const titleDiv = document.createElement("div");
     titleDiv.classList.add("title");

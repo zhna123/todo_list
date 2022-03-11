@@ -7,7 +7,6 @@ export default class Storage {
 
     getProjectByName(name) {
         const project = localStorage.getItem(PROJECT_PREFIX + name);
-        console.log(JSON.parse(project))
         return project === null ? {} : JSON.parse(project);
     }
 

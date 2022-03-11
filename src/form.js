@@ -149,7 +149,7 @@ function createOptionalDiv() {
 
 }
 
-function createHiddenForm(projectName, priority, description, hiddenByDefault) {
+function createHiddenForm(dueDate, projectName, priority, description, hiddenByDefault) {
     const hiddenForm = document.createElement("div");
     if (hiddenByDefault) {
         hiddenForm.classList.add("hidden");
@@ -219,6 +219,7 @@ function createHiddenForm(projectName, priority, description, hiddenByDefault) {
     dateInput.type = "date";
     dateInput.name = "dueDate";
     dateInput.placeholder = "Due date"
+    dateInput.value = dueDate;
     dueDateDiv.appendChild(dateInput);
     hiddenForm.appendChild(dueDateDiv);
 
@@ -245,7 +246,7 @@ function todoForm(project, projectBtn) {
     form.appendChild(optionalDiv);
 
     // more fields - hidden by default
-    const hiddenForm = createHiddenForm("", "", "", true);
+    const hiddenForm = createHiddenForm("", "", "", "", true);
     form.appendChild(hiddenForm);
 
     const btnDiv = document.createElement("div")
@@ -257,11 +258,12 @@ function todoForm(project, projectBtn) {
     btn.addEventListener("click", function(e) {
         e.preventDefault();
         const title = form.elements['title'].value;
+        const dueDate = form.elements['dueDate'].value !== "" ? form.elements['dueDate'].value : "";
         const projectName = form.elements['project'].value !== "" ? form.elements['project'].value : project.name;
         const priority = form.elements['priority'].value !== "" ? form.elements['priority'].value : "";
         const description = form.elements['description'].value !== "" ? form.elements['description'].value : "";
         // title, dueDate, priority, description, project, complete
-        const todo = new TodoItem(title, "", priority, description, projectName, false); 
+        const todo = new TodoItem(title, dueDate, priority, description, projectName, false); 
         saveTodoItemInProject(projectName, todo)
         
         closeForm();
@@ -287,7 +289,7 @@ function editForm(project, todo, index, projectBtn) {
     const inputDiv = createTaskInput(title);
     form.appendChild(inputDiv);
 
-    const hiddenForm = createHiddenForm(projectName, priority, description, false);
+    const hiddenForm = createHiddenForm(dueDate, projectName, priority, description, false);
     form.appendChild(hiddenForm);
 
     const btnDiv = document.createElement("div")
@@ -300,6 +302,7 @@ function editForm(project, todo, index, projectBtn) {
         e.preventDefault();
         
         const title = form.elements['title'].value;
+        const dueDate = form.elements['dueDate'].value !== "" ? form.elements['dueDate'].value : "";
         const updatedProjectName = form.elements['project'].value !== "" ? form.elements['project'].value : project.name;
         const priority = form.elements['priority'].value !== "" ? form.elements['priority'].value : "";
         const description = form.elements['description'].value !== "" ? form.elements['description'].value : "";
@@ -308,7 +311,7 @@ function editForm(project, todo, index, projectBtn) {
             deleteTodoItem(projectName, index);
         }
         // title, dueDate, priority, description, project, complete
-        const todo = new TodoItem(title, "", priority, description, updatedProjectName, complete); 
+        const todo = new TodoItem(title, dueDate, priority, description, updatedProjectName, complete); 
         updateTodoItem(updatedProjectName, todo, index)
         
         closeForm();
