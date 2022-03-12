@@ -148,6 +148,17 @@ button.delete {
     width: 80px;
 }
 
+.delete_project button {
+    background-color: #E30000;
+    height: 50px;;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 17px;
+    margin-top: 40px;
+}
+
 .menu_content .divider {
     margin-top: 50px;
 }

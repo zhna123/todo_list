@@ -1,6 +1,6 @@
 import './style/style.css';
 import Add_Icon from './images/project_add.svg';
-import {getAllProjects, getOrCreateProject, getProject} from './project.js';
+import {getAllProjects, getOrCreateProject, getProject, deleteProject} from './project.js';
 import {loadProjectContent} from './menuContent.js';
 import {openProjectForm} from './form.js';
 import {format} from 'date-fns';

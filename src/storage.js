@@ -18,6 +18,10 @@ export default class Storage {
         return JSON.parse(localStorage.getItem(PROJECT_PREFIX + projName));
     }
 
+    deleteProject(projName) {
+        localStorage.removeItem(PROJECT_PREFIX + projName);
+    }
+
     getAllProjects() {
         // array of objects - {key: projectName String, val: Project Object}
         const results = [];

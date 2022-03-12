@@ -27,6 +27,10 @@ export function getProject(name) {
     return storage.getProjectByName(name);
 }
 
+export function deleteProject(name) {
+    return storage.deleteProject(name);
+}
+
 export function saveTodoItemInProject(projectName, todoItem) {
     storage.saveTodoItemInProject(projectName, todoItem);
 }

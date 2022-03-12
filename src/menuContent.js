@@ -1,7 +1,7 @@
 import ADD_TODO_ICON from './images/add_todo.svg';
 import {openAddTodoForm, openEditForm} from './form.js';
 import {markComplete} from './todoItem.js'
-import {updateTodoItem, deleteTodoItem} from './project.js';
+import {updateTodoItem, deleteTodoItem, deleteProject} from './project.js';
 
 export function loadProjectContent(project, projectBtn) {
 
@@ -25,6 +25,20 @@ export function loadProjectContent(project, projectBtn) {
     } else {
         const todoContent = loadTodos(project, projectBtn);
         content.appendChild(todoContent);
+    }
+
+    if (project.name !== "default") {
+        const deleteProjectDiv = document.createElement("div");
+        deleteProjectDiv.classList.add("delete_project");
+        const deleteProjectBtn = document.createElement("button");
+        deleteProjectBtn.textContent = "DELETE PROJECT";
+        deleteProjectDiv.appendChild(deleteProjectBtn);
+
+        deleteProjectBtn.addEventListener("click", function(e) {
+            deleteProject(project.name);
+            location.reload();
+        })
+        content.appendChild(deleteProjectDiv);
     }
     return content;
 }
