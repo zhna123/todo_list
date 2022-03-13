@@ -81,6 +81,10 @@ function projectForm() {
     btn.addEventListener("click", function(e) {
         e.preventDefault();
         const projectName = form.elements['projectName'].value;
+        if (projectName == "") {
+            alert("Project name must be filled out.")
+            return false;
+        }
         createNewProject(projectName);
         closeForm();
         location.reload();
@@ -263,6 +267,10 @@ function todoForm(project, projectBtn) {
         const priority = form.elements['priority'].value !== "" ? form.elements['priority'].value : "";
         const description = form.elements['description'].value !== "" ? form.elements['description'].value : "";
         // title, dueDate, priority, description, project, complete
+        if (title == "") {
+            alert("Task name must be filled out.")
+            return false;
+        }
         const todo = new TodoItem(title, dueDate, priority, description, projectName, false); 
         saveTodoItemInProject(projectName, todo)
         
@@ -306,6 +314,11 @@ function editForm(project, todo, index, projectBtn) {
         const updatedProjectName = form.elements['project'].value !== "" ? form.elements['project'].value : project.name;
         const priority = form.elements['priority'].value !== "" ? form.elements['priority'].value : "";
         const description = form.elements['description'].value !== "" ? form.elements['description'].value : "";
+
+        if (title == "") {
+            alert("Task name must be filled out.")
+            return false;
+        }
 
         if (projectName !== updatedProjectName) {
             deleteTodoItem(projectName, index);
